@@ -64,6 +64,23 @@ func TestInt64(t *testing.T) {
 
 	atom.Store(42)
 	require.Equal(t, int64(42), atom.Load(), "Store didn't set the correct value.")
+
+	atom = NewInt64(-42)
+
+	require.Equal(t, int64(-42), atom.Load(), "Load didn't work.")
+	require.Equal(t, int64(-38), atom.Add(4), "Add didn't work.")
+	require.Equal(t, int64(-40), atom.Sub(2), "Sub didn't work.")
+	require.Equal(t, int64(-39), atom.Inc(), "Inc didn't work.")
+	require.Equal(t, int64(-40), atom.Dec(), "Dec didn't work.")
+
+	require.True(t, atom.CAS(-40, -5), "CAS didn't report a swap.")
+	require.Equal(t, int64(-5), atom.Load(), "CAS didn't set the correct value.")
+
+	require.Equal(t, int64(-5), atom.Swap(1), "Swap didn't return the old value.")
+	require.Equal(t, int64(1), atom.Load(), "Swap didn't set the correct value.")
+
+	atom.Store(-42)
+	require.Equal(t, int64(-42), atom.Load(), "Store didn't set the correct value.")
 }
 
 func TestUint32(t *testing.T) {

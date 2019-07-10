@@ -90,9 +90,9 @@ func (i *Int64) xAddr() *int64 {
 
 // NewInt64 creates an Int64.
 func NewInt64(i int64) *Int64 {
-	ret := &Int64{[3]int32{0, 0, 0}}
+	ret := Int64{}
 	*ret.xAddr() = i
-	return ret
+	return &ret
 }
 
 // Load atomically loads the wrapped value.
@@ -202,9 +202,9 @@ func (i *Uint64) xAddr() *uint64 {
 
 // NewUint64 creates a Uint64.
 func NewUint64(i uint64) *Uint64 {
-	ret := &Uint64{[3]int32{0, 0, 0}}
+	ret := Uint64{}
 	*ret.xAddr() = i
-	return ret
+	return &ret
 }
 
 // Load atomically loads the wrapped value.
