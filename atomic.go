@@ -23,6 +23,7 @@
 package atomic
 
 import (
+	"fmt"
 	"math"
 	"sync/atomic"
 	"time"
@@ -92,12 +93,21 @@ func (i *Int64) xAddr() *int64 {
 func NewInt64(i int64) *Int64 {
 	ret := Int64{}
 	*ret.xAddr() = i
+	fmt.Println("addr of i at creation ", unsafe.Pointer(&ret))
+	fmt.Println("addr of i.v at creation ", unsafe.Pointer(&ret.v))
+	fmt.Println("addr of p at creation ", ret.xAddr())
+
 	return &ret
 }
 
 // Load atomically loads the wrapped value.
 func (i *Int64) Load() int64 {
 	p := i.xAddr()
+	fmt.Println("i at load ", i)
+	fmt.Println("addr of i.v at load ", unsafe.Pointer(&i.v))
+	fmt.Println("addr of i at load unsafe", unsafe.Pointer(i))
+	fmt.Println("addr of p at load ", p)
+
 	return atomic.LoadInt64(p)
 }
 
